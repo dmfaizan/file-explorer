@@ -1,8 +1,8 @@
 # `File Explorer`
 
-1. **Component Mock Up**
+## 1. **Component Mock Up**
 
-1.1 **Top Level**
+### 1.1 **Top Level**
 
 ```
 <Page>
@@ -16,7 +16,7 @@
 </Page>
 ```
 
-1.2 **Column**
+### 1.2 **Column**
 
 ```
 <Column>
@@ -33,7 +33,7 @@
 </Column>
 ```
 
-1.3 **Item**
+### 1.3 **Item**
 
 ```
 <Item>
@@ -45,7 +45,7 @@
 </Item>
 ```
 
-1.4 **Header**
+### 1.4 **Header**
 
 Explorer Header
 
@@ -73,9 +73,9 @@ Column Header
 </ExplorerHeader>
 ```
 
-2. **Data**
+## 2. **Data**
 
-2.1 **Types** // Might wanna just dynamically determine the type based on the file name
+### 2.1 **Types** // Might wanna just dynamically determine the type based on the file name
 
 - Folders (Folder)
 - Text (.txt)
@@ -83,13 +83,13 @@ Column Header
 - PDF (.pdf)
 - JSON (.json)
 
-2.2 **Enums**
+### 2.2 **Enums**
 
 - Name
 - Size
 - Created
 
-2.3 **JSON Examples**
+### 2.3 **JSON Examples**
 
 (https://react.dev/learn/choosing-the-state-structure)
 
