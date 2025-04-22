@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ItemInterface } from "../interfaces/Item";
 import Details from "./Details";
 import Header from "./Header";
@@ -7,31 +7,46 @@ import Item from "./Item";
 export default function Column({
   initialItems,
   parentItem,
+  highlighted,
+  selected,
   selectHandler,
 }: {
   initialItems: ItemInterface[];
   parentItem: ItemInterface;
+  highlighted: number[];
+  selected: number;
   selectHandler: (id: number) => void;
 }) {
+  const [option, setOption] = useState("Name");
   const items: ItemInterface[] = initialItems.filter((i) =>
     parentItem.childIds.includes(i.id)
   );
   return (
     <div className="h-full w-[300px] border-r bg-green-200">
       {parentItem.type === "Folder" && (
-        <Header type={"COLUMN"} title={parentItem.name} />
+        <Header
+          type={"COLUMN"}
+          title={parentItem.name}
+          option={option}
+          setOption={setOption}
+        />
       )}
       {parentItem.type === "Folder" ? (
-        <>
+        <div className="py-2 px-1">
           {items.map((item: ItemInterface) => (
-            <React.Fragment key={item.id}>
-              <Item id={item.id} item={item} selectHandler={selectHandler} />
-            </React.Fragment>
+            <Item
+              key={item.id}
+              id={item.id}
+              item={item}
+              highlighted={highlighted.includes(item.id)}
+              selected={selected == item.id}
+              selectHandler={selectHandler}
+            />
           ))}
-        </>
+        </div>
       ) : (
-        <div>
-          <Details />
+        <div className="p-5">
+          <Details item={parentItem} />
         </div>
       )}
     </div>
