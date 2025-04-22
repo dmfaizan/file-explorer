@@ -1,5 +1,7 @@
-export const items = {
-  0: {
+import { ItemInterface } from "../interfaces/Item";
+
+export const initialItems: ItemInterface[] = [
+  {
     id: 0,
     name: "Root",
     type: "Folder",
@@ -8,7 +10,7 @@ export const items = {
     created: "",
     childIds: [1, 11, 13, 16, 17],
   },
-  1: {
+  {
     id: 1,
     name: "Documents",
     type: "Folder",
@@ -17,7 +19,7 @@ export const items = {
     created: "",
     childIds: [2, 3, 4],
   },
-  2: {
+  {
     id: 2,
     name: "Projects",
     type: "Folder",
@@ -26,7 +28,7 @@ export const items = {
     created: "",
     childIds: [5, 6],
   },
-  3: {
+  {
     id: 3,
     name: "budget.xlsx",
     type: "xlsx",
@@ -35,7 +37,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  4: {
+  {
     id: 4,
     name: "resume.docx",
     type: "docx",
@@ -44,7 +46,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  5: {
+  {
     id: 5,
     name: "ReactApp",
     type: "Folder",
@@ -53,7 +55,7 @@ export const items = {
     created: "",
     childIds: [7, 8],
   },
-  6: {
+  {
     id: 6,
     name: "project-plan.md",
     type: "md",
@@ -62,7 +64,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  7: {
+  {
     id: 7,
     name: "src",
     type: "Folder",
@@ -71,7 +73,7 @@ export const items = {
     created: "",
     childIds: [9, 10],
   },
-  8: {
+  {
     id: 8,
     name: "package.json",
     type: "json",
@@ -80,7 +82,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  9: {
+  {
     id: 9,
     name: "App.js",
     type: "js",
@@ -89,7 +91,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  10: {
+  {
     id: 10,
     name: "index.js",
     type: "js",
@@ -98,7 +100,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  11: {
+  {
     id: 11,
     name: "Downloads",
     type: "Folder",
@@ -107,7 +109,7 @@ export const items = {
     created: "",
     childIds: [12],
   },
-  12: {
+  {
     id: 12,
     name: "lmao.txt",
     type: "txt",
@@ -116,7 +118,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  13: {
+  {
     id: 13,
     name: "Pictures",
     type: "Folder",
@@ -125,7 +127,7 @@ export const items = {
     created: "",
     childIds: [14, 15],
   },
-  14: {
+  {
     id: 14,
     name: "my-face.png",
     type: "png",
@@ -134,7 +136,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  15: {
+  {
     id: 15,
     name: "my-bank-account.jpeg",
     type: "jpeg",
@@ -143,7 +145,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  16: {
+  {
     id: 16,
     name: "notes.txt",
     type: "txt",
@@ -152,7 +154,7 @@ export const items = {
     created: "",
     childIds: [],
   },
-  17: {
+  {
     id: 17,
     name: "report.pdf",
     type: "pdf",
@@ -161,4 +163,4 @@ export const items = {
     created: "",
     childIds: [],
   },
-};
+];

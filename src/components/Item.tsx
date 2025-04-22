@@ -1,7 +1,9 @@
-export default function Item() {
+import { ItemInterface } from "../interfaces/Item";
+
+export default function Item({ item }: { item: ItemInterface }) {
   return (
     <div>
-      <span>Item</span>
+      <span>{item.name}</span>
     </div>
   );
 }
