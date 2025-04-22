@@ -1,3 +1,4 @@
+import React from "react";
 import { ItemInterface } from "../interfaces/Item";
 import Details from "./Details";
 import Header from "./Header";
@@ -15,7 +16,6 @@ export default function Column({
   const items: ItemInterface[] = initialItems.filter((i) =>
     parentItem.childIds.includes(i.id)
   );
-  console.log(items);
   return (
     <div className="h-full w-[300px] border-r bg-green-200">
       {parentItem.type === "Folder" && (
@@ -24,14 +24,9 @@ export default function Column({
       {parentItem.type === "Folder" ? (
         <>
           {items.map((item: ItemInterface) => (
-            <>
-              <Item
-                key={item.id}
-                id={item.id}
-                item={item}
-                selectHandler={selectHandler}
-              />
-            </>
+            <React.Fragment key={item.id}>
+              <Item id={item.id} item={item} selectHandler={selectHandler} />
+            </React.Fragment>
           ))}
         </>
       ) : (
