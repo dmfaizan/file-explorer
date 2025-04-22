@@ -1,17 +1,16 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import Column from "./components/Column";
-import Header from "./components/Header";
 import { initialItems } from "./data/Items";
 import { ItemInterface } from "./interfaces/Item";
+import ExplorerHeader from "./components/ExplorerHeader";
 
 function App() {
-  const [items, setItems] = useState(initialItems);
   const [selectedItemIDs, setSelectedItemIDs] = useState([0]);
 
   // Function to find the parent of an item
   const findParentId = (childId: number) => {
-    for (const item of items) {
+    for (const item of initialItems) {
       if (item.childIds.includes(childId)) {
         return item.id;
       }
@@ -22,7 +21,7 @@ function App() {
   // Function to get the path from root to an item
   const getPathToItem = (itemId: number) => {
     const path = [];
-    let currentId = itemId;
+    let currentId: number | null = itemId;
 
     // Add the current item to the path
     path.unshift(currentId);
@@ -75,7 +74,7 @@ function App() {
     }
   };
 
-  const selectedItems = items.filter((i) => selectedItemIDs.includes(i.id));
+  const selectedItems = initialItems.filter((i) => selectedItemIDs.includes(i.id));
 
   // Sort the selected items according to their order in selectedItemIDs
   // to ensure columns appear in the correct order
@@ -92,12 +91,12 @@ function App() {
   return (
     // https://stackoverflow.com/a/75094583
     <div className="h-screen w-full bg-blue-200 overflow-x-hidden">
-      <Header type={"EXPLORER"} title={latestTitle ? latestTitle : "Root"} />
+      <ExplorerHeader title={latestTitle ? latestTitle : "Root"} />
       <div className="h-full w-full flex flex-row bg-red-200 overflow-scroll [&>div]:flex-shrink-0">
         {selectedItems.map((item: ItemInterface) => (
           <Column
             key={item.id}
-            initialItems={items}
+            initialItems={initialItems}
             parentItem={item}
             highlighted={selectedItemIDs}
             selected={currentlySelected}

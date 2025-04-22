@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ItemInterface } from "../interfaces/Item";
 import Details from "./Details";
-import Header from "./Header";
 import Item from "./Item";
+import ColumnHeader from "./ColumnHeader";
 
 export default function Column({
   initialItems,
@@ -24,8 +24,7 @@ export default function Column({
   return (
     <div className="h-full w-[300px] border-r bg-green-200">
       {parentItem.type === "Folder" && (
-        <Header
-          type={"COLUMN"}
+        <ColumnHeader
           title={parentItem.name}
           option={option}
           setOption={setOption}
