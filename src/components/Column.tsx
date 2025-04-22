@@ -4,13 +4,13 @@ import Header from "./Header";
 import Item from "./Item";
 
 export default function Column({
-  type,
   initialItems,
   parentItem,
+  selectHandler,
 }: {
-  type: string;
   initialItems: ItemInterface[];
   parentItem: ItemInterface;
+  selectHandler: (id: number) => void;
 }) {
   const items: ItemInterface[] = initialItems.filter((i) =>
     parentItem.childIds.includes(i.id)
@@ -18,12 +18,19 @@ export default function Column({
   console.log(items);
   return (
     <div className="h-full w-[300px] border-r bg-green-200">
-      {type === "LIST" && <Header type={"COLUMN"} title={parentItem.name} />}
-      {type === "LIST" ? (
+      {parentItem.type === "Folder" && (
+        <Header type={"COLUMN"} title={parentItem.name} />
+      )}
+      {parentItem.type === "Folder" ? (
         <>
           {items.map((item: ItemInterface) => (
             <>
-              <Item key={item.id} item={item} />
+              <Item
+                key={item.id}
+                id={item.id}
+                item={item}
+                selectHandler={selectHandler}
+              />
             </>
           ))}
         </>
