@@ -9,12 +9,14 @@ export default function Column({
   parentItem,
   highlighted,
   selected,
+  path,
   selectHandler,
 }: {
   initialItems: ItemInterface[];
   parentItem: ItemInterface;
   highlighted: number[];
   selected: number;
+  path: string;
   selectHandler: (id: number) => void;
 }) {
   const [option, setOption] = useState("Name");
@@ -22,7 +24,7 @@ export default function Column({
     parentItem.childIds.includes(i.id)
   );
   return (
-    <div className="h-full w-[300px] border-r bg-green-200">
+    <div className="h-full w-[300px] border-r border-r-[#777777] bg-[##00000005]">
       {parentItem.type === "Folder" && (
         <ColumnHeader
           title={parentItem.name}
@@ -45,7 +47,7 @@ export default function Column({
         </div>
       ) : (
         <div className="p-5">
-          <Details item={parentItem} />
+          <Details item={parentItem} path={path} />
         </div>
       )}
     </div>

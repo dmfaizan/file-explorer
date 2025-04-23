@@ -4,6 +4,7 @@ import Column from "./components/Column";
 import { initialItems } from "./data/Items";
 import { ItemInterface } from "./interfaces/Item";
 import ExplorerHeader from "./components/ExplorerHeader";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 function App() {
   const [selectedItemIDs, setSelectedItemIDs] = useState([0]);
@@ -74,7 +75,9 @@ function App() {
     }
   };
 
-  const selectedItems = initialItems.filter((i) => selectedItemIDs.includes(i.id));
+  const selectedItems = initialItems.filter((i) =>
+    selectedItemIDs.includes(i.id)
+  );
 
   // Sort the selected items according to their order in selectedItemIDs
   // to ensure columns appear in the correct order
@@ -86,25 +89,33 @@ function App() {
     (i) => i.id === findParentId(selectedItems.length - 1)
   )?.name;
 
-  const currentlySelected = selectedItems[selectedItems.length - 1].id
+  const currentlySelected = selectedItems[selectedItems.length - 1].id;
+
+  let currentPath = "";
+  selectedItems.forEach((item) => {
+    currentPath += "/" + item.name;
+  });
 
   return (
     // https://stackoverflow.com/a/75094583
-    <div className="h-screen w-full bg-blue-200 overflow-x-hidden">
-      <ExplorerHeader title={latestTitle ? latestTitle : "Root"} />
-      <div className="h-full w-full flex flex-row bg-red-200 overflow-scroll [&>div]:flex-shrink-0">
-        {selectedItems.map((item: ItemInterface) => (
-          <Column
-            key={item.id}
-            initialItems={initialItems}
-            parentItem={item}
-            highlighted={selectedItemIDs}
-            selected={currentlySelected}
-            selectHandler={handleSelectItemID}
-          />
-        ))}
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div className="h-screen w-full bg-black overflow-x-hidden text-white">
+        <ExplorerHeader title={latestTitle ? latestTitle : "Root"} />
+        <div className="h-full w-full flex flex-row overflow-scroll [&>div]:flex-shrink-0">
+          {selectedItems.map((item: ItemInterface) => (
+            <Column
+              key={item.id}
+              initialItems={initialItems}
+              parentItem={item}
+              highlighted={selectedItemIDs}
+              selected={currentlySelected}
+              path={currentPath}
+              selectHandler={handleSelectItemID}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

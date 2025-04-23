@@ -17,7 +17,11 @@ export default function Item({
     <div
       onClick={() => selectHandler(id)}
       className={`flex flex-row items-center justify-start ${
-        selected ? "bg-[#0000FF]" : highlighted ? "bg-blue-50" : "bg-blue-200"
+        selected
+          ? "bg-[#0000FF]"
+          : highlighted
+          ? "bg-gray-200/20"
+          : ""
       } rounded-sm px-[12px] py-[8px] gap-2 hover:brightness-90`}
     >
       {item.type == "Folder" ? (
