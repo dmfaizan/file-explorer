@@ -2,8 +2,8 @@ export interface ItemInterface {
   id: number;
   name: string;
   type: string;
-  size: null;
+  size: number | null;
   path: string;
-  created: string;
+  created: Date;
   childIds: number[];
 }

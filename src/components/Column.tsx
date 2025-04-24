@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ItemInterface } from "../interfaces/Item";
 import Details from "./Details";
 import Item from "./Item";
@@ -19,10 +19,55 @@ export default function Column({
   path: string;
   selectHandler: (id: number) => void;
 }) {
+  const [items, setItems] = useState<ItemInterface[]>();
   const [option, setOption] = useState("Name");
-  const items: ItemInterface[] = initialItems.filter((i) =>
-    parentItem.childIds.includes(i.id)
+  const calculateFolderSize = useCallback(
+    (folder: ItemInterface) => {
+      let totalSize = 0;
+
+      for (const i of folder.childIds) {
+        const item = initialItems.find((data) => data.id === i);
+        if (item?.type === "Folder") {
+          totalSize += calculateFolderSize(item);
+        } else {
+          totalSize += item?.size == null ? 0 : item.size;
+        }
+      }
+
+      return totalSize;
+    },
+    [initialItems]
   );
+  const isSizeNull = useCallback(
+    (item: ItemInterface) => {
+      if (item.size == null) {
+        return calculateFolderSize(item);
+      } else {
+        return item.size;
+      }
+    },
+    [calculateFolderSize]
+  );
+  useEffect(() => {
+    const items: ItemInterface[] = initialItems.filter((i) =>
+      parentItem.childIds.includes(i.id)
+    );
+    if (option == "Name") {
+      items.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (option == "Size") {
+      items.sort((a, b) => isSizeNull(b) - isSizeNull(a));
+    } else if (option == "Created") {
+      items.sort((a, b) => b.created.getTime() - a.created.getTime());
+    }
+    setItems(items);
+  }, [
+    initialItems,
+    parentItem.childIds,
+    option,
+    calculateFolderSize,
+    isSizeNull,
+  ]);
+
   return (
     <div className="h-full w-[300px] border-r border-r-[#777777] bg-[##00000005]">
       {parentItem.type === "Folder" && (
@@ -34,7 +79,7 @@ export default function Column({
       )}
       {parentItem.type === "Folder" ? (
         <div className="py-2 px-1">
-          {items.map((item: ItemInterface) => (
+          {items?.map((item: ItemInterface) => (
             <Item
               key={item.id}
               id={item.id}
