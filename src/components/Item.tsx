@@ -4,12 +4,14 @@ export default function Item({
   item,
   id,
   highlighted,
+  shouldPulse,
   selected,
   selectHandler,
 }: {
   item: ItemInterface;
   id: number;
   highlighted: boolean;
+  shouldPulse: number;
   selected: boolean;
   selectHandler: (id: number) => void;
 }) {
@@ -17,15 +19,15 @@ export default function Item({
     <div
       onClick={() => selectHandler(id)}
       className={`flex flex-row items-center justify-start ${
-        selected
-          ? "bg-[#0000FF]"
-          : highlighted
-          ? "bg-gray-200/20"
-          : ""
+        selected ? "bg-[#0000FF]" : highlighted ? "bg-gray-200/20" : ""
       } rounded-sm px-[12px] py-[8px] gap-2 hover:brightness-90`}
     >
       {item.type == "Folder" ? (
-        <div className="h-[20px] w-[20px] bg-blue-500 rounded-sm" />
+        <div
+          className={`${
+            shouldPulse == id ? "pulse" : ""
+          } h-[20px] w-[20px] bg-blue-500 rounded-sm`}
+        />
       ) : (
         <div className="h-[20px] w-[20px] bg-blue-50 rounded-sm" />
       )}

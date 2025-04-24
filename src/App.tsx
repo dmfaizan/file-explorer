@@ -8,6 +8,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 
 function App() {
   const [selectedItemIDs, setSelectedItemIDs] = useState([0]);
+  const [shouldPulse, setShouldPulse] = useState(-1)
 
   // Function to find the parent of an item
   const findParentId = (childId: number) => {
@@ -35,6 +36,17 @@ function App() {
     }
 
     return path;
+  };
+
+  const handleBackButton = () => {
+    if (selectedItemIDs.length == 1) {
+      return;
+    }
+    const newSelectedIds = [
+      ...selectedItemIDs.slice(0, selectedItemIDs.length - 1),
+    ];
+    setSelectedItemIDs(newSelectedIds);
+    setShouldPulse(selectedItemIDs[selectedItemIDs.length - 2])
   };
 
   const handleSelectItemID = (id: number) => {
@@ -100,7 +112,10 @@ function App() {
     // https://stackoverflow.com/a/75094583
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="h-screen w-full bg-black overflow-x-hidden text-white">
-        <ExplorerHeader title={latestTitle ? latestTitle : "Root"} />
+        <ExplorerHeader
+          title={latestTitle ? latestTitle : "Root"}
+          backButtonHandler={handleBackButton}
+        />
         <div className="h-full w-full flex flex-row overflow-scroll [&>div]:flex-shrink-0">
           {selectedItems.map((item: ItemInterface) => (
             <Column
@@ -109,6 +124,7 @@ function App() {
               parentItem={item}
               highlighted={selectedItemIDs}
               selected={currentlySelected}
+              shouldPulse={shouldPulse}
               path={currentPath}
               selectHandler={handleSelectItemID}
             />

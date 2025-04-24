@@ -9,6 +9,7 @@ export default function Column({
   parentItem,
   highlighted,
   selected,
+  shouldPulse,
   path,
   selectHandler,
 }: {
@@ -16,6 +17,7 @@ export default function Column({
   parentItem: ItemInterface;
   highlighted: number[];
   selected: number;
+  shouldPulse: number;
   path: string;
   selectHandler: (id: number) => void;
 }) {
@@ -85,6 +87,7 @@ export default function Column({
               id={item.id}
               item={item}
               highlighted={highlighted.includes(item.id)}
+              shouldPulse={shouldPulse}
               selected={selected == item.id}
               selectHandler={selectHandler}
             />
