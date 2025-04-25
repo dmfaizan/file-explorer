@@ -4,6 +4,7 @@ import Details from "./Details";
 import Item from "./Item";
 import ColumnHeader from "./ColumnHeader";
 import { ItemType } from "@/data/ItemTypes";
+import { SortingOptions } from "@/data/SortingOptions";
 
 export default function Column({
   initialItems,
@@ -23,7 +24,7 @@ export default function Column({
   selectHandler: (id: number) => void;
 }) {
   const [items, setItems] = useState<ItemInterface[]>();
-  const [option, setOption] = useState("Name");
+  const [option, setOption] = useState(SortingOptions.NAME);
   const calculateFolderSize = useCallback(
     (folder: ItemInterface) => {
       let totalSize = 0;
@@ -55,11 +56,11 @@ export default function Column({
     const items: ItemInterface[] = initialItems.filter((i) =>
       parentItem.childIds.includes(i.id)
     );
-    if (option == "Name") {
+    if (option == SortingOptions.NAME) {
       items.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (option == "Size") {
+    } else if (option == SortingOptions.SIZE) {
       items.sort((a, b) => isSizeNull(b) - isSizeNull(a));
-    } else if (option == "Created") {
+    } else if (option == SortingOptions.CREATED) {
       items.sort((a, b) => b.created.getTime() - a.created.getTime());
     }
     setItems(items);

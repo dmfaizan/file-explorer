@@ -1,3 +1,4 @@
+import { SortingOptions } from "@/data/SortingOptions";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -12,7 +13,7 @@ export default function ColumnFilter({
   setOption,
 }: {
   option: string;
-  setOption: React.Dispatch<React.SetStateAction<string>>;
+  setOption: React.Dispatch<React.SetStateAction<SortingOptions>>;
 }) {
   return (
     <DropdownMenu>
@@ -23,20 +24,20 @@ export default function ColumnFilter({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuCheckboxItem
-          checked={option == "Name"}
-          onCheckedChange={() => setOption("Name")}
+          checked={option == SortingOptions.NAME}
+          onCheckedChange={() => setOption(SortingOptions.NAME)}
         >
           Name
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
-          checked={option == "Size"}
-          onCheckedChange={() => setOption("Size")}
+          checked={option == SortingOptions.SIZE}
+          onCheckedChange={() => setOption(SortingOptions.SIZE)}
         >
           Size
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
-          checked={option == "Created"}
-          onCheckedChange={() => setOption("Created")}
+          checked={option == SortingOptions.CREATED}
+          onCheckedChange={() => setOption(SortingOptions.CREATED)}
         >
           Created
         </DropdownMenuCheckboxItem>
