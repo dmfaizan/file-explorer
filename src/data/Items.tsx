@@ -1,10 +1,11 @@
 import { ItemInterface } from "../interfaces/Item";
+import { ItemType } from "./ItemTypes";
 
 export const initialItems: ItemInterface[] = [
   {
     id: 0,
     name: "Root",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 22, 2025 10:14:00"),
@@ -13,7 +14,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 1,
     name: "Documents",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 22, 2025 10:15:24"),
@@ -22,7 +23,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 2,
     name: "Projects",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 22, 2025 10:16:27"),
@@ -31,7 +32,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 3,
     name: "budget.xlsx",
-    type: "xlsx",
+    type: ItemType.XLSX,
     size: 29.3,
     path: "",
     created: new Date("April 23, 2025 07:25:17"),
@@ -40,7 +41,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 4,
     name: "resume.docx",
-    type: "docx",
+    type: ItemType.DOCX,
     size: 51.2,
     path: "",
     created: new Date("January 21, 2025 18:09:01"),
@@ -49,7 +50,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 5,
     name: "ReactApp",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 21, 2025 09:00:00"),
@@ -58,7 +59,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 6,
     name: "project-plan.md",
-    type: "md",
+    type: ItemType.MARKDOWN,
     size: 13,
     path: "",
     created: new Date("April 21, 2025 08:05:06"),
@@ -67,7 +68,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 7,
     name: "src",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 21, 2025 09:02:56"),
@@ -76,7 +77,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 8,
     name: "package.json",
-    type: "json",
+    type: ItemType.JSON,
     size: 7.5,
     path: "",
     created: new Date("April 21, 2025 09:01:04"),
@@ -85,7 +86,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 9,
     name: "App.js",
-    type: "js",
+    type: ItemType.JS,
     size: 67.5,
     path: "",
     created: new Date("April 21, 2025 09:03:45"),
@@ -94,7 +95,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 10,
     name: "index.js",
-    type: "js",
+    type: ItemType.JS,
     size: 54.5,
     path: "",
     created: new Date("April 21, 2025 09:03:34"),
@@ -103,7 +104,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 11,
     name: "Downloads",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 22, 2025 19:55:53"),
@@ -112,7 +113,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 12,
     name: "lmao.txt",
-    type: "txt",
+    type: ItemType.Text,
     size: 2.2,
     path: "",
     created: new Date("April 24, 2025 06:28:29"),
@@ -121,7 +122,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 13,
     name: "Pictures",
-    type: "Folder",
+    type: ItemType.Folder,
     size: null,
     path: "",
     created: new Date("April 22, 2025 21:01:04"),
@@ -130,7 +131,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 14,
     name: "my-face.png",
-    type: "png",
+    type: ItemType.PNG,
     size: 4035.6,
     path: "",
     created: new Date("February 23, 2024 15:15:15"),
@@ -139,7 +140,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 15,
     name: "my-bank-account.jpeg",
-    type: "jpeg",
+    type: ItemType.JPEG,
     size: 10012903.5,
     path: "",
     created: new Date("March 7, 2025 19:19:44"),
@@ -148,7 +149,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 16,
     name: "notes.txt",
-    type: "txt",
+    type: ItemType.Text,
     size: 156.3,
     path: "",
     created: new Date("April 24, 2025 09:14:12"),
@@ -157,7 +158,7 @@ export const initialItems: ItemInterface[] = [
   {
     id: 17,
     name: "report.pdf",
-    type: "pdf",
+    type: ItemType.PDF,
     size: 4563,
     path: "",
     created: new Date("April 24, 2025 16:17:18"),

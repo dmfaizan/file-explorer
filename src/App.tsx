@@ -97,8 +97,6 @@ function App() {
     return selectedItemIDs.indexOf(a.id) - selectedItemIDs.indexOf(b.id);
   });
 
-  console.log(selectedItems.length);
-
   const latestTitle = selectedItems.find(
     (i) => i.id === findParentId(selectedItemIDs[selectedItems.length - 1])
   )?.name;
