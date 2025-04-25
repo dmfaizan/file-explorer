@@ -25,6 +25,7 @@ export default function Column({
 }) {
   const [items, setItems] = useState<ItemInterface[]>();
   const [option, setOption] = useState(SortingOptions.NAME);
+
   const calculateFolderSize = useCallback(
     (folder: ItemInterface) => {
       let totalSize = 0;
@@ -42,6 +43,7 @@ export default function Column({
     },
     [initialItems]
   );
+
   const isSizeNull = useCallback(
     (item: ItemInterface) => {
       if (item.size == null) {
@@ -52,25 +54,30 @@ export default function Column({
     },
     [calculateFolderSize]
   );
-  useEffect(() => {
+
+  const handleSetOptions = (option: string) => {
     const items: ItemInterface[] = initialItems.filter((i) =>
       parentItem.childIds.includes(i.id)
     );
     if (option == SortingOptions.NAME) {
       items.sort((a, b) => a.name.localeCompare(b.name));
+      setOption(SortingOptions.NAME);
     } else if (option == SortingOptions.SIZE) {
       items.sort((a, b) => isSizeNull(b) - isSizeNull(a));
+      setOption(SortingOptions.SIZE);
     } else if (option == SortingOptions.CREATED) {
       items.sort((a, b) => b.created.getTime() - a.created.getTime());
+      setOption(SortingOptions.CREATED);
     }
     setItems(items);
-  }, [
-    initialItems,
-    parentItem.childIds,
-    option,
-    calculateFolderSize,
-    isSizeNull,
-  ]);
+  };
+
+  useEffect(() => {
+    const items: ItemInterface[] = initialItems.filter((i) =>
+      parentItem.childIds.includes(i.id)
+    );
+    setItems(items)
+  }, [initialItems, parentItem.childIds])
 
   return (
     <div className="h-full w-[300px] border-r border-r-[#777777] bg-[##00000005]">
@@ -78,7 +85,7 @@ export default function Column({
         <ColumnHeader
           title={parentItem.name}
           option={option}
-          setOption={setOption}
+          handleSetOptions={handleSetOptions}
         />
       )}
       {parentItem.type === ItemType.Folder ? (

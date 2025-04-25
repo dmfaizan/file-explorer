@@ -10,10 +10,10 @@ import { ChevronDown } from "lucide-react";
 
 export default function ColumnFilter({
   option,
-  setOption,
+  handleSetOptions,
 }: {
   option: string;
-  setOption: React.Dispatch<React.SetStateAction<SortingOptions>>;
+  handleSetOptions: (option: string) => void;
 }) {
   return (
     <DropdownMenu>
@@ -25,19 +25,19 @@ export default function ColumnFilter({
       <DropdownMenuContent align="end">
         <DropdownMenuCheckboxItem
           checked={option == SortingOptions.NAME}
-          onCheckedChange={() => setOption(SortingOptions.NAME)}
+          onCheckedChange={() => handleSetOptions(SortingOptions.NAME)}
         >
           Name
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={option == SortingOptions.SIZE}
-          onCheckedChange={() => setOption(SortingOptions.SIZE)}
+          onCheckedChange={() => handleSetOptions(SortingOptions.SIZE)}
         >
           Size
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={option == SortingOptions.CREATED}
-          onCheckedChange={() => setOption(SortingOptions.CREATED)}
+          onCheckedChange={() => handleSetOptions(SortingOptions.CREATED)}
         >
           Created
         </DropdownMenuCheckboxItem>
