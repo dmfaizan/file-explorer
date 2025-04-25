@@ -3,6 +3,7 @@ import { ItemInterface } from "../interfaces/Item";
 import Details from "./Details";
 import Item from "./Item";
 import ColumnHeader from "./ColumnHeader";
+import { ItemType } from "@/data/ItemTypes";
 
 export default function Column({
   initialItems,
@@ -29,7 +30,7 @@ export default function Column({
 
       for (const i of folder.childIds) {
         const item = initialItems.find((data) => data.id === i);
-        if (item?.type === "Folder") {
+        if (item?.type === ItemType.Folder) {
           totalSize += calculateFolderSize(item);
         } else {
           totalSize += item?.size == null ? 0 : item.size;
@@ -72,14 +73,14 @@ export default function Column({
 
   return (
     <div className="h-full w-[300px] border-r border-r-[#777777] bg-[##00000005]">
-      {parentItem.type === "Folder" && (
+      {parentItem.type === ItemType.Folder && (
         <ColumnHeader
           title={parentItem.name}
           option={option}
           setOption={setOption}
         />
       )}
-      {parentItem.type === "Folder" ? (
+      {parentItem.type === ItemType.Folder ? (
         <div className="py-2 px-1">
           {items?.map((item: ItemInterface) => (
             <Item
