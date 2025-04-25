@@ -8,7 +8,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 
 function App() {
   const [selectedItemIDs, setSelectedItemIDs] = useState([0]);
-  const [shouldPulse, setShouldPulse] = useState(-1)
+  const [shouldPulse, setShouldPulse] = useState(-1);
 
   // Function to find the parent of an item
   const findParentId = (childId: number) => {
@@ -46,7 +46,7 @@ function App() {
       ...selectedItemIDs.slice(0, selectedItemIDs.length - 1),
     ];
     setSelectedItemIDs(newSelectedIds);
-    setShouldPulse(selectedItemIDs[selectedItemIDs.length - 2])
+    setShouldPulse(selectedItemIDs[selectedItemIDs.length - 2]);
   };
 
   const handleSelectItemID = (id: number) => {
@@ -97,8 +97,10 @@ function App() {
     return selectedItemIDs.indexOf(a.id) - selectedItemIDs.indexOf(b.id);
   });
 
+  console.log(selectedItems.length);
+
   const latestTitle = selectedItems.find(
-    (i) => i.id === findParentId(selectedItems.length - 1)
+    (i) => i.id === findParentId(selectedItemIDs[selectedItems.length - 1])
   )?.name;
 
   const currentlySelected = selectedItems[selectedItems.length - 1].id;
