@@ -1,3 +1,4 @@
+import React from 'react';
 import ColumnFilter from "./ColumnFilter";
 
 export default function ColumnHeader({

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ItemType } from "@/data/ItemTypes";
 import { ItemInterface } from "../interfaces/Item";
 

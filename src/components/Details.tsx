@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ItemInterface } from "../interfaces/Item";
 
 export default function Details({

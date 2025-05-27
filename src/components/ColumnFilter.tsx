@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { SortingOptions } from "@/data/SortingOptions";
 import { Button } from "./ui/button";
 import {
