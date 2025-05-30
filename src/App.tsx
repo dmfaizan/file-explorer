@@ -47,17 +47,17 @@ function App() {
       <div className="h-screen w-full bg-black overflow-x-hidden text-white">
         <ExplorerHeader
           title={latestTitle ? latestTitle : "Root"}
-          backButtonHandler={handleBackButton}
+          handleBackButton={handleBackButton}
         />
         <div className="h-full w-full flex flex-row overflow-scroll [&>div]:flex-shrink-0">
           {paths.map((path: string) => (
             <Column
               key={path}
               shouldPulse={shouldPulse}
-              highlighted={paths}
               path={path}
+              highlighted={paths}
               selected={currentPath}
-              selectHandler={handleSetCurrentPath}
+              handleSelected={handleSetCurrentPath}
             />
           ))}
         </div>

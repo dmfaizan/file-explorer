@@ -1,96 +1,142 @@
-import React from "react";
+import React, { useRef } from "react";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemInterface } from "../interfaces/Item";
 import Details from "./Details";
 import Item from "./Item";
 import ColumnHeader from "./ColumnHeader";
 import { ItemType } from "@/data/ItemTypes";
 import { SortingOptions } from "@/data/SortingOptions";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Input } from "./ui/input";
 
 export default function Column({
   shouldPulse,
+  path,
   highlighted,
   selected,
-  path,
-  selectHandler,
+  handleSelected,
 }: {
   shouldPulse: string;
   path: string;
   highlighted: string[];
   selected: string;
-  selectHandler: (item: ItemInterface) => void;
+  handleSelected: (item: ItemInterface) => void;
 }) {
-  const [items, setItems] = useState<ItemInterface[]>();
   const [option, setOption] = useState(SortingOptions.NAME);
+  const [add, setAdd] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<ItemInterface>();
+  const [newFolderName, setNewFolderName] = useState("");
 
-  const { data, status } = useQuery(["items", path], async () => {
+  const newFolderRef = useRef<HTMLInputElement>(null);
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (add) {
+      newFolderRef.current?.focus();
+    }
+  }, [add]);
+
+  const fetchItems = async () => {
     const res = await fetch(
       `${import.meta.env.VITE_API_URL}/folder?path=${path}`
     );
     return res.json();
+  };
+
+  const createFolder = async ({
+    name,
+    path,
+  }: {
+    name: string;
+    path: string;
+  }) => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/folder`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: name, path: path }),
+    });
+
+    if (!res.ok) throw new Error("Failed to create folder");
+
+    return res.json();
+  };
+
+  const deleteItem = async ({ path }: { path: string }) => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/item`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ path: path }),
+    });
+
+    if (!res.ok) throw new Error("Failed to delete item");
+
+    return res.json();
+  };
+
+  const { data, status } = useQuery(path, fetchItems, {
+    staleTime: 0,
+    cacheTime: 1000 * 60 * 5, // 5 minutes
+  });
+
+  const addMutation = useMutation(createFolder, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(path);
+    },
+  });
+
+  const deleteMutation = useMutation(deleteItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(path);
+    },
   });
 
   if (status === "loading") {
-    return <div className="p-5">Loading...</div>;
+    return (
+      <div className="h-full w-[300px] border-r border-r-[#777777] bg-[##00000005]">
+        <div className="p-5">Loading...</div>
+      </div>
+    );
   }
 
   if (status === "error" || !data?.folder) {
-    return <div className="p-5">Something went wrong or folder not found.</div>;
+    return (
+      <div className="h-full w-[300px] border-r border-r-[#777777] bg-[##00000005]">
+        <div className="p-5">Something went wrong.</div>
+      </div>
+    );
   }
 
   const paths = path.split("/");
   const title = paths.length === 1 ? "~" : paths[paths.length - 1];
 
-  // const calculateFolderSize = useCallback(
-  //   (folder: ItemInterface) => {
-  //     let totalSize = 0;
-
-  //     for (const i of folder.childIds) {
-  //       const item = initialItems.find((data) => data.id === i);
-  //       if (item?.type === ItemType.Folder) {
-  //         totalSize += calculateFolderSize(item);
-  //       } else {
-  //         totalSize += item?.size == null ? 0 : item.size;
-  //       }
-  //     }
-
-  //     return totalSize;
-  //   },
-  //   [initialItems]
-  // );
-
-  // const isSizeNull = useCallback(
-  //   (item: ItemInterface) => {
-  //     if (item.size == null) {
-  //       return calculateFolderSize(item);
-  //     } else {
-  //       return item.size;
-  //     }
-  //   },
-  //   [calculateFolderSize]
-  // );
-
-  // const handleSetOptions = (option: string) => {
-  //   const items: ItemInterface[] = initialItems.filter((i) =>
-  //     parentItem.childIds.includes(i.id)
-  //   );
-  //   if (option == SortingOptions.NAME) {
-  //     items.sort((a, b) => a.name.localeCompare(b.name));
-  //     setOption(SortingOptions.NAME);
-  //   } else if (option == SortingOptions.SIZE) {
-  //     items.sort((a, b) => isSizeNull(b) - isSizeNull(a));
-  //     setOption(SortingOptions.SIZE);
-  //   } else if (option == SortingOptions.CREATED) {
-  //     items.sort((a, b) => b.created.getTime() - a.created.getTime());
-  //     setOption(SortingOptions.CREATED);
-  //   }
-  //   setItems(items);
-  // };
-
   const handleSetOptions = (option: string) => {
-    console.log(option);
+    if (option == SortingOptions.NAME) {
+      setOption(SortingOptions.NAME);
+    } else if (option == SortingOptions.SIZE) {
+      setOption(SortingOptions.SIZE);
+    } else if (option == SortingOptions.CREATED) {
+      setOption(SortingOptions.CREATED);
+    }
+  };
+
+  const handleDelete = (item: ItemInterface) => {
+    deleteMutation.mutate({ path: item.path });
+  };
+
+  const handleNewFolder = () => {
+    addMutation.mutate({ name: newFolderName, path: `${path}/${newFolderName}` });
+    setAdd(false)
+  };
+
+  const handleSelectedSafe = (item: ItemInterface) => {
+    setSelectedItem(item);
+    handleSelected(item);
   };
 
   return (
@@ -99,6 +145,11 @@ export default function Column({
         <ColumnHeader
           title={title}
           option={option}
+          currentPath={selected}
+          selectedItem={selectedItem}
+          setAdd={setAdd}
+          handleNewFolder={handleNewFolder}
+          handleDelete={handleDelete}
           handleSetOptions={handleSetOptions}
         />
       )}
@@ -111,9 +162,25 @@ export default function Column({
               highlighted={highlighted.includes(item.path)}
               shouldPulse={shouldPulse}
               selected={selected == item.path}
-              selectHandler={selectHandler}
+              isAdding={add}
+              selectHandler={handleSelectedSafe}
             />
           ))}
+          {add && (
+            <div className="h-12 flex flex-row items-center justify-start gap-3 px-[6px] py-[8px] rounded-sm bg-[#0000FF]">
+              <Input
+                ref={newFolderRef}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleNewFolder()
+                  }
+                }}
+                onChange={(e) => setNewFolderName(e.target.value)}
+                onBlur={() => setAdd(false)}
+                className="outline-hidden"
+              />
+            </div>
+          )}
         </div>
       ) : (
         <div className="p-5">
