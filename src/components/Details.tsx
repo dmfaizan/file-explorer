@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ItemInterface } from "../interfaces/Item";
 
 export default function Details({
@@ -54,7 +56,7 @@ export default function Details({
         <span>Type: {item.type}</span>
         <span>Size: {formatSize(item.size)}</span>
         <span>Path: {path}</span>
-        <span>Created: {formatDate(item.created)}</span>
+        <span>Created: {formatDate(new Date(item.created))}</span>
       </div>
     </div>
   );

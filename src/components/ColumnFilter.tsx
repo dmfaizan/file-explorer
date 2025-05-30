@@ -1,3 +1,5 @@
+import React from "react";
+
 import { SortingOptions } from "@/data/SortingOptions";
 import { Button } from "./ui/button";
 import {
@@ -18,7 +20,7 @@ export default function ColumnFilter({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="ml-auto">
+        <Button variant="ghost" className="w-24">
           {option} <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
